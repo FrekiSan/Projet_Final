@@ -7,6 +7,7 @@ const playlist = document.getElementById('playlist');
 const playlistItems = playlist.querySelectorAll('li');
 const codeButtons = document.querySelectorAll('.code-buttons button');
 const vinyl = document.getElementById('vinyl');
+const volumeSlider = document.querySelector('.volume-control input[type="range"]');
 
 const tracks = [
   "Asset/music/1_Amour_sous_la_lune.mp3",
@@ -33,7 +34,9 @@ const codeToIndex = {
   'C1': 6,
   'C2': 7,
   'C3': 8,
-  'D1': 9
+  'D1': 9,
+  'D2': 10,
+  'D3': 11
 };
 
 let currentTrack = 0;
@@ -169,6 +172,37 @@ audio.addEventListener('ended', () => {
   vinyl.classList.remove('spin');
   currentTrack = (currentTrack + 1) % tracks.length;
   changeTrack(currentTrack);
+});
+
+/// controle du volume
+
+volumeSlider.addEventListener('input', () => {
+  audio.volume = volumeSlider.value;
+});
+
+function updateSliderBackground(value) {
+  const percentage = (value - volumeSlider.min) / (volumeSlider.max - volumeSlider.min) * 100;
+
+  volumeSlider.style.background = `
+    linear-gradient(90deg,
+      #3600f8 0%,
+      #6d00f8 20%,
+      #a000f8 40%,
+      #f000c0 60%,
+      #f85040 80%,
+      #f81d00 100%)
+  `;
+  volumeSlider.style.backgroundSize = '100% 100%';
+  volumeSlider.style.backgroundRepeat = 'no-repeat';
+}
+
+// Initial setup
+updateSliderBackground(volumeSlider.value);
+
+// On input
+volumeSlider.addEventListener('input', (e) => {
+  updateSliderBackground(e.target.value);
+  audio.volume = e.target.value;
 });
 
 // Init

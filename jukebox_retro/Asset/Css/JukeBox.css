@@ -12,10 +12,9 @@ body {
   margin: auto;
   background: #330033;
   border-radius: 20px;
-  box-shadow:
-    0 0 20px #b700ff,
-    inset 0 0 40px #b733ff;
   padding: 20px;
+  border: 2px solid #ff66ff;
+  animation: subtle-rgb-border 8s linear infinite;
 }
 
 h1 {
@@ -23,6 +22,11 @@ h1 {
     0 0 8px #b700ff,
     0 0 20px #b733ff,
     0 0 30px #b766ff;
+}
+
+.controls button,
+.code-buttons button {
+  animation: subtle-rgb-border 10s linear infinite;
 }
 
 .controls button {
@@ -51,6 +55,58 @@ h1 {
 .controls button:hover:not(:disabled) {
   background: #b700ff;
   transform: scale(1.05);
+}
+
+.volume-control {
+  margin-top: 20px;
+  text-align: center;
+  color: #ffccff;
+  text-shadow: 0 0 5px #ff66ff;
+}
+
+.volume-control input[type="range"] {
+  width: 200px;
+  height: 8px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+  background-size: 600% 100%;
+  background-repeat: no-repeat;
+  animation: rgb-glow 5s linear infinite;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #fff0;
+  box-shadow: 0 0 10px #fff, 0 0 20px #ff00ff;
+  cursor: pointer;
+  margin-top: 10px;
+  accent-color: #ff00ff;
+}
+
+@keyframes rgb-glow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border: 2px solid #ff00ff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #fff, 0 0 10px #ff00ff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.volume-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border: 2px solid #ff00ff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #fff, 0 0 10px #ff00ff;
+  cursor: pointer;
 }
 
 .code-selector {
@@ -100,20 +156,6 @@ h1 {
   transform: scale(1.1);
 }
 
-/* Responsive */
-
-@media (max-width: 600px) {
-  .code-buttons {
-    grid-template-columns: repeat(3, 50px);
-    gap: 10px;
-  }
-
-  .code-buttons button {
-    font-size: 1.2rem;
-    padding: 8px 0;
-  }
-}
-
 .loading {
   font-size: 1.2rem;
   margin-top: 1rem;
@@ -146,10 +188,6 @@ h1 {
   animation: spin 2s linear infinite;
 }
 
-.hidden {
-  display: none;
-}
-
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -173,16 +211,40 @@ h1 {
   border-radius: 10px;
   font-weight: bold;
   box-shadow: 0 0 10px #ff66ff;
-  pointer-events: none; /* Désactive les clics */
+  pointer-events: none;
   user-select: none;
   opacity: 0.7;
   transition: opacity 0.3s ease;
+  animation: subtle-rgb-border 12s linear infinite;
 }
 
-/* Surligne la piste active */
 .track-list li.active {
   opacity: 1;
   background: #ff00aa;
   color: #fff;
   text-shadow: 0 0 5px #fff;
+}
+
+@keyframes subtle-rgb-border {
+  0% { border-color: #ff66ff; box-shadow: 0 0 10px #ff66ff; }
+  25% { border-color: #66ffff; box-shadow: 0 0 10px #66ffff; }
+  50% { border-color: #66ff66; box-shadow: 0 0 10px #66ff66; }
+  75% { border-color: #ffcc66; box-shadow: 0 0 10px #ffcc66; }
+  100% { border-color: #ff66ff; box-shadow: 0 0 10px #ff66ff; }
+}
+
+@media (max-width: 600px) {
+  .volume-control input[type="range"] {
+    width: 90%;
+  }
+
+  .code-buttons {
+    grid-template-columns: repeat(3, 50px);
+    gap: 10px;
+  }
+
+  .code-buttons button {
+    font-size: 1.2rem;
+    padding: 8px 0;
+  }
 }
